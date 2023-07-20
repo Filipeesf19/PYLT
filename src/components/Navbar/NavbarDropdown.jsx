@@ -54,18 +54,19 @@ const Wrapper = styled.div`
   }
 
   .links-dropdown a {
-    color: var(--color4);
+    color: var(--color1);
     font-size: var(--small-text);
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
     transition: var(--transition);
     text-decoration: none;
+    font-weight: var(--font-weight1);
   }
 
   .link-dropdown:hover {
     background-color: var(--color3);
     transform: translateX(5px);
-    color: var(--color1);
+    color: var(--color4);
   }
 `;
 
