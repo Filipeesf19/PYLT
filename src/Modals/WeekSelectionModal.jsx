@@ -39,7 +39,7 @@ const Wrapper = styled.ul`
   list-style-type: none;
   justify-content: start;
   width: 100%;
-  height: 80%;
+  height: 100%;
   overflow-y: scroll;
 
   .week {

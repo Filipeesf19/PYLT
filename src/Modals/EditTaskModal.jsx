@@ -34,59 +34,51 @@ function EditTaskModal() {
           ref={taskRef}
           defaultValue={clickedToDoItem.description}
         />
-        <div className="btns-container">
-          <div className="points-container">
-            <div className="points-text">Points</div>
-            <input
-              type="text"
-              className="points-input input2"
-              id="points"
-              ref={pointsRef}
-              defaultValue={clickedToDoItem.points}
-            />
-          </div>
-          <button className="add-btn btn4">
-            <div className="add-button-text">Confirm</div>
-          </button>
+        <div className="points-container">
+          <div className="points-text">Points</div>
+          <input
+            type="text"
+            className="points-input input2"
+            id="points"
+            ref={pointsRef}
+            defaultValue={clickedToDoItem.points}
+          />
         </div>
+        <button className="confirm-btn btn4">
+          <div className="confirm-button-text">Confirm</div>
+        </button>
       </form>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  height: 100%;
   flex: 1 1 auto;
   display: flex;
   flex-flow: column;
+  justify-content: space-around;
 
   .form {
     flex: 1 1 auto;
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
   }
 
   .edit-text {
     width: 90%;
-    height: 20%;
-    padding: 5px;
+    height: 50px;
     margin: 10px auto;
   }
 
   .btns-container {
-    display: flex;
-    justify-content: space-around;
-    height: 30%;
-    gap: 20px;
-    width: 90%;
-    margin-top: 20px;
   }
 
   .points-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .points-text {
@@ -96,7 +88,8 @@ const Wrapper = styled.div`
 
   .points-input {
     height: 50%;
-    width: 50px;
+    width: 80px;
+    text-align: center;
   }
 
   .points-container {
