@@ -16,11 +16,13 @@ const NavbarDropdown = ({ showLinks, isWindowSmall }) => {
           {navLinks.map((link, index) => {
             const { url, text } = link;
             return (
-              <Link key={index} to={url} onClick={() => setShowLinks(false)}>
-                <li key={index} className="link-dropdown">
-                  {text}
-                </li>
-              </Link>
+              <li
+                key={index}
+                className="link-dropdown"
+                onClick={() => setShowLinks(false)}
+              >
+                <Link to={url}>{text}</Link>
+              </li>
             );
           })}
         </ul>
@@ -51,6 +53,7 @@ const Wrapper = styled.div`
     box-shadow: var(--shadow-1);
     cursor: pointer;
     transition: var(--transition);
+    width: 100%;
   }
 
   .links-dropdown a {
@@ -61,6 +64,8 @@ const Wrapper = styled.div`
     transition: var(--transition);
     text-decoration: none;
     font-weight: var(--font-weight1);
+    display: block;
+    width: 100%;
   }
 
   .link-dropdown:hover {
