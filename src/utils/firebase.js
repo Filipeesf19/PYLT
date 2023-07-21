@@ -9,6 +9,7 @@ import {
   addDoc,
   deleteDoc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -29,6 +30,7 @@ export const db = getFirestore();
 // Collections
 export const selfAwarenessCol = collection(db, "SelfAwarenessText"); //Collection of sections in the Self Awareness Page
 export const toDoTaskCol = collection(db, "ToDoTaskList"); //Collection of sections in the Self Awareness Page
+export const goalCol = collection(db, "GoalGroups"); //Collection of sections in the Self Awareness Page
 
 //CRUD FUNCTIONS
 
@@ -36,6 +38,25 @@ export const toDoTaskCol = collection(db, "ToDoTaskList"); //Collection of secti
 export const getDocument = async (col, id, action) => {
   const docRef = doc(db, `${col}`, `${id}`);
   const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    let data = docSnap.data();
+    data.id = `${id}`;
+    action(data);
+  } else {
+    console.log("no data");
+  }
+};
+
+//GET NESTED DOCUMENT
+export const getNestedDocument = async (
+  mainColName,
+  idFirstDoc,
+  subCollectionName,
+  action
+) => {
+  const docRef = doc(db, mainColName, idFirstDoc);
+  const colRef = collection(docRef, subCollectionName);
+  const docSnap = await getDoc(colRef);
   if (docSnap.exists()) {
     let data = docSnap.data();
     data.id = `${id}`;
@@ -61,13 +82,13 @@ export const fetchAndSetData = async (col, action) => {
   }
 };
 
-//UPDATE DATA
+//UPDATE A DOCUMENT
 export const updateData = async (col, id, newData) => {
   const docRef = doc(db, `${col}`, `${id}`);
   await updateDoc(docRef, newData);
 };
 
-//ADD DATA
+//ADD A DOCUMENT WITH ID
 export const addData = async (col, newData) => {
   await addDoc(col, newData);
 };
@@ -75,4 +96,21 @@ export const addData = async (col, newData) => {
 //DELETE DOCUMENT
 export const deleteData = async (col, id) => {
   await deleteDoc(doc(db, col, `${id}`));
+};
+
+//ADD DOCUMENT WITHOUT AUTO ID
+export const addDocumentNoAutoId = async (col, newDocName, fields) => {
+  await setDoc(doc(db, col, `${newDocName}`), fields);
+};
+
+//ADD A NEW SUB-COLLECTION (1 LEVEL BELOW)
+export const addSubCollection = async (
+  mainColName,
+  idFirstDoc,
+  subCollectionName,
+  subColData
+) => {
+  const docRef = doc(db, mainColName, idFirstDoc);
+  const colRef = collection(docRef, subCollectionName);
+  addDoc(colRef, subColData);
 };

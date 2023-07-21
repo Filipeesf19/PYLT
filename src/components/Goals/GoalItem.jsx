@@ -1,50 +1,44 @@
-import { FaCheck, FaEdit, FaTrashAlt } from "react-icons/fa";
-import styled from "styled-components";
+import React from "react";
+import { styled } from "styled-components";
+import { FaEdit, FaTrashAlt, FaCheck } from "react-icons/fa";
+import { useGoalsContext } from "../../Context/GoalsContext";
+import { goalCol } from "../../utils/firebase";
+import { updateData, fetchAndSetData } from "../../utils/firebase";
 import { useModalContext } from "../../Context/ModalContext";
-import {
-  deleteData,
-  updateData,
-  getDocument,
-  toDoTaskCol,
-  fetchAndSetData,
-} from "../../utils/firebase";
-import { useTaskContext } from "../../Context/TasksContext";
+import { getDocument } from "../../utils/firebase";
 
-function ToDoTask({ description, points, isDone, id }) {
-  const { openTaskEditModal } = useModalContext();
-  const { setClickedToDoItem, setToDoTasksData } = useTaskContext();
+function GoalItem({ description, points, title, isDone, id }) {
+  const { openGoalEditModal } = useModalContext();
+
+  const { setClickedGoalGroup, setGoalGroups } = useGoalsContext();
 
   //Open the modal, get the clicked item and set it in the state
   function editClick() {
-    openTaskEditModal();
-    getDocument("ToDoTaskList", `${id}`, setClickedToDoItem);
+    openGoalEditModal();
+    getDocument("GoalGroups", `${id}`, setClickedGoalGroup);
   }
 
   //Get the clicked item, set it in the state and update the document property in the server
   function toggleTask() {
-    fetchAndSetData("ToDoTaskList", `${id}`, setClickedToDoItem);
-    updateData("ToDoTaskList", id, { isDone: !isDone });
-    fetchAndSetData(toDoTaskCol, setToDoTasksData);
+    fetchAndSetData("GoalGroups", `${id}`, setClickedGoalGroup);
+    updateData("GoalGroups", id, { isDone: !isDone });
+    fetchAndSetData(goalCol, setGoalGroups);
   }
 
   return (
-    <Wrapper className="task-container">
+    <Wrapper>
       <div
         className={isDone ? "done-btn btn1" : "done-btn btn2"}
         onClick={toggleTask}
       >
         <FaCheck />
       </div>
-      <div className="task input1">{description}</div>
+      <div className="goal input1">{description}</div>
       <div className="points input1">{points} pts</div>
-
       <div className="edit-btn btn1" onClick={editClick}>
         <FaEdit />
       </div>
-      <div
-        className="delete-btn btn1"
-        onClick={() => deleteData("ToDoTaskList", id)}
-      >
+      <div className="delete-btn btn1">
         <FaTrashAlt />
       </div>
     </Wrapper>
@@ -56,7 +50,7 @@ const Wrapper = styled.div`
   margin: 10px;
   height: 45px;
 
-  .task {
+  .goal {
     padding: 5px;
     height: auto;
     flex-grow: 1;
@@ -87,4 +81,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default ToDoTask;
+export default GoalItem;

@@ -32,7 +32,7 @@ export const ModalProvider = ({ children }) => {
     setIsToDoTaskAddClicked(true);
   };
 
-  //Edit Item Modal
+  //Edit Task Item Modal
   const [isEditTaskAddClicked, setIsEditTaskAddClicked] = useState(false);
 
   const openTaskEditModal = () => {
@@ -46,6 +46,30 @@ export const ModalProvider = ({ children }) => {
   const openWeekSelectionModal = () => {
     setIsModalOpen(true);
     setIsWeekButtonClicked(true);
+  };
+
+  //Goal Add Item Modal
+  const [isAddGoalClicked, setIsAddGoalClicked] = useState(false);
+
+  const openAddGoalModal = () => {
+    setIsModalOpen(true);
+    setIsAddGoalClicked(true);
+  };
+
+  //Edit Goal Item Modal
+  const [isEditGoalClicked, setIsGoalClicked] = useState(false);
+
+  const openGoalEditModal = () => {
+    setIsModalOpen(true);
+    setIsGoalClicked(true);
+  };
+
+  //Goal Add Item Modal
+  const [isAddGoalAreaClicked, setIsAddGoalAreaClicked] = useState(false);
+
+  const openAddGoalAreaModal = () => {
+    setIsModalOpen(true);
+    setIsAddGoalAreaClicked(true);
   };
 
   //Close Modal
@@ -72,6 +96,12 @@ export const ModalProvider = ({ children }) => {
         isEditTaskAddClicked,
         isWeekButtonClicked,
         openWeekSelectionModal,
+        isAddGoalClicked,
+        openAddGoalModal,
+        isEditGoalClicked,
+        openGoalEditModal,
+        isAddGoalAreaClicked,
+        openAddGoalAreaModal,
         closeModal,
       }}
     >
