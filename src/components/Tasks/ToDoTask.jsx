@@ -5,7 +5,7 @@ import {
   deleteData,
   updateData,
   getDocument,
-  fetchAndSetData,
+  getCollection,
 } from "../../utils/firebase";
 import { useTaskContext } from "../../Context/TasksContext";
 
@@ -21,8 +21,8 @@ function ToDoTask({ description, points, isDone, id }) {
 
   //Get the clicked item and set it in the state
   function toggleTask() {
-    fetchAndSetData("ToDoTaskList", `${id}`, setClickedToDoItem);
-    updateData("ToDoTaskList", id, { isDone: !isDone });
+    getCollection("ToDoTaskList", `${id}`, setClickedToDoItem);
+    updateData("ToDoTaskList", `${id}`, { isDone: !isDone });
   }
 
   return (

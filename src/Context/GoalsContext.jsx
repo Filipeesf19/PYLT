@@ -10,7 +10,7 @@ export const GoalsProvider = ({ children }) => {
   const [goals, setGoals] = useState([]);
 
   //Last goal item that was clicked
-  const [clickedGoalItem, setClickedGoalItem] = useState([]);
+  const [clickedGoalItem, setClickedGoalItem] = useState({});
 
   //Last Clicked Goal Group
   const [clickedGoalGroup, setClickedGoalGroup] = useState({});

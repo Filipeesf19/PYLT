@@ -13,7 +13,7 @@ function SelfAwarenessEditModal({ title, currentItem, text }) {
     e.preventDefault();
     const inputText = ref.current.value;
     const newData = { text: `${inputText}` };
-    updateData("SelfAwarenessText", id, newData);
+    updateData("SelfAwarenessText", `${id}`, newData);
     setIsModalOpen(false);
   }
 

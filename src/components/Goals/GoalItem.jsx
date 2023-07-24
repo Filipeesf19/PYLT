@@ -2,27 +2,26 @@ import React from "react";
 import { styled } from "styled-components";
 import { FaEdit, FaTrashAlt, FaCheck } from "react-icons/fa";
 import { useGoalsContext } from "../../Context/GoalsContext";
-import { goalCol } from "../../utils/firebase";
-import { updateData, fetchAndSetData } from "../../utils/firebase";
+import { updateData, getCollection } from "../../utils/firebase";
 import { useModalContext } from "../../Context/ModalContext";
 import { getDocument } from "../../utils/firebase";
+import { deleteData } from "../../utils/firebase";
 
-function GoalItem({ description, points, title, isDone, id }) {
+function GoalItem({ description, points, isDone, id, path }) {
   const { openGoalEditModal } = useModalContext();
 
-  const { setClickedGoalGroup, setGoalGroups } = useGoalsContext();
+  const { setClickedGoalItem } = useGoalsContext();
 
   //Open the modal, get the clicked item and set it in the state
   function editClick() {
     openGoalEditModal();
-    getDocument("GoalGroups", `${id}`, setClickedGoalGroup);
+    getDocument(`${path}`, `${id}`, setClickedGoalItem);
   }
 
   //Get the clicked item, set it in the state and update the document property in the server
   function toggleTask() {
-    fetchAndSetData("GoalGroups", `${id}`, setClickedGoalGroup);
-    updateData("GoalGroups", id, { isDone: !isDone });
-    fetchAndSetData(goalCol, setGoalGroups);
+    getCollection(`${path}`, `${id}`, setClickedGoalItem);
+    updateData(`${path}`, `${id}`, { isDone: !isDone });
   }
 
   return (
@@ -38,7 +37,10 @@ function GoalItem({ description, points, title, isDone, id }) {
       <div className="edit-btn btn1" onClick={editClick}>
         <FaEdit />
       </div>
-      <div className="delete-btn btn1">
+      <div
+        className="delete-btn btn1"
+        onClick={() => deleteData(`${path}`, id)}
+      >
         <FaTrashAlt />
       </div>
     </Wrapper>

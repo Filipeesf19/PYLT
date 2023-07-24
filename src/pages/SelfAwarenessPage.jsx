@@ -5,8 +5,7 @@ import SelfAwarenessEditModal from "../Modals/SelfAwarenessEditModal";
 import { useEffect } from "react";
 import { useModalContext } from "../Context/ModalContext";
 import styled from "styled-components";
-import { fetchAndSetData } from "../utils/firebase";
-import { selfAwarenessCol } from "../utils/firebase";
+import { getCollection } from "../utils/firebase";
 import YearListModal from "../Modals/YearListModal";
 import { useSelfAwarenessContext } from "../Context/SelfAwarenessContext";
 
@@ -24,7 +23,7 @@ function SelfAwarenessPage() {
 
   //Firebase fetch data and set the state value array equal to the array in the server
   useEffect(() => {
-    fetchAndSetData(selfAwarenessCol, setSelfAwarenessData);
+    getCollection("SelfAwarenessText", setSelfAwarenessData);
   }, []);
 
   // get text, description and text from current item

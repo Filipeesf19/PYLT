@@ -6,7 +6,7 @@ import Modal from "..//Modals/Modal";
 import YearListModal from "..//Modals/YearListModal";
 import EditTaskModal from "..//Modals/EditTaskModal";
 import WeekSelectionModal from "..//Modals/WeekSelectionModal";
-import { fetchAndSetData, toDoTaskCol } from "../utils/firebase";
+import { getCollection } from "../utils/firebase";
 import { useEffect } from "react";
 import { useTaskContext } from "../Context/TasksContext";
 import { useModalContext } from "../Context/ModalContext";
@@ -16,7 +16,7 @@ function TasksPage() {
 
   //Fetch data from Firebase and set the state value "ToDoTasksData" equal to the array in the server every time the page is rendered
   useEffect(() => {
-    fetchAndSetData(toDoTaskCol, setToDoTasksData);
+    getCollection("ToDoTaskList", setToDoTasksData);
   }, []);
 
   //Get all the modals available in this page

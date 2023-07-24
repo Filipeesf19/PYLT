@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { toDoTaskCol } from "../utils/firebase";
 import { useRef } from "react";
 import { useModalContext } from "../Context/ModalContext";
-import { addData } from "../utils/firebase";
+import { addDocumentAutoId } from "../utils/firebase";
 import { useTaskContext } from "../Context/TasksContext";
 
 function AddTaskModal() {
@@ -22,7 +21,7 @@ function AddTaskModal() {
       week: `${toDoListSelectedWeek}`,
       isDone: false,
     }; //define the new data
-    addData(toDoTaskCol, newData); //Add the new document to the "toDoTaskList" collection
+    addDocumentAutoId("ToDoTaskList", newData); //Add the new document to the "toDoTaskList" collection
     closeModal(); //close modal
   }
 

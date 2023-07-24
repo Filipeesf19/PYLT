@@ -1,7 +1,7 @@
 import { useModalContext } from "../Context/ModalContext";
 import { styled } from "styled-components";
 import { useRef } from "react";
-import { addDocumentNoAutoId } from "../utils/firebase";
+import { addDocumentAutoIdNoAutoId } from "../utils/firebase";
 
 function AddGoalGroupModal() {
   const { closeModal } = useModalContext();
@@ -13,7 +13,7 @@ function AddGoalGroupModal() {
     const title = titleRef.current.value;
     const newDocName = title;
     const fields = {};
-    addDocumentNoAutoId("GoalGroups", newDocName, fields);
+    addDocumentAutoIdNoAutoId("GoalGroups", newDocName, fields);
     closeModal();
   }
 

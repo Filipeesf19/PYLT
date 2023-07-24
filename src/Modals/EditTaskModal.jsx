@@ -20,7 +20,7 @@ function EditTaskModal() {
       description: `${task}`,
       points: `${points}`,
     };
-    updateData("ToDoTaskList", id, newData);
+    updateData("ToDoTaskList", `${id}`, newData);
     closeModal();
   }
 

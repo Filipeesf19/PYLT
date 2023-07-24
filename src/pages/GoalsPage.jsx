@@ -2,11 +2,10 @@ import { styled } from "styled-components";
 import GoalContainer from "../components/Goals/GoalContainer";
 import { useModalContext } from "../Context/ModalContext";
 import { useGoalsContext } from "../Context/GoalsContext";
-import { goalCol } from "../utils/firebase";
 import { useEffect } from "react";
 import Modal from "../Modals/Modal";
 import AddGoalModal from "../Modals/AddGoalModal";
-import { fetchAndSetData } from "../utils/firebase";
+import { getCollection } from "../utils/firebase";
 import EditGoalModal from "../Modals/EditGoalModal";
 import AddGoalGroupModal from "../Modals/AddGoalGroupModal";
 
@@ -24,7 +23,7 @@ function GoalsPage() {
 
   //Firebase fetch data and set the state value array equal to the array in the server
   useEffect(() => {
-    fetchAndSetData(goalCol, setGoalGroups);
+    getCollection("GoalGroups", setGoalGroups);
   }, []);
 
   return (
@@ -38,8 +37,14 @@ function GoalsPage() {
         </button>
       </div>
       <div className="body">
-        {goalGroups?.map((goalGroup, index) => {
-          return <GoalContainer key={index} title={goalGroup.id} />;
+        {goalGroups?.map((goalGroup) => {
+          return (
+            <GoalContainer
+              key={goalGroup.id}
+              title={goalGroup.id}
+              path={`GoalGroups/${goalGroup.id}/GoalList`}
+            />
+          );
         })}
       </div>
       <Modal>

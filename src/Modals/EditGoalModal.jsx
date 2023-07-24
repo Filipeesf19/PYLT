@@ -5,7 +5,7 @@ import { updateData } from "../utils/firebase";
 import { useModalContext } from "../Context/ModalContext";
 
 function EditGoalModal() {
-  const { clickedGoalGroup } = useGoalsContext();
+  const { clickedGoalItem } = useGoalsContext();
   const { closeModal } = useModalContext();
 
   const goalRef = useRef(null);
@@ -15,15 +15,16 @@ function EditGoalModal() {
     e.preventDefault();
     const goal = goalRef.current.value;
     const points = pointsRef.current.value;
-    const id = clickedGoalGroup.id;
+    const id = clickedGoalItem.id;
     const newData = {
       description: `${goal}`,
       points: `${points}`,
     };
-    updateData("GoalGroups", id, newData);
+    updateData("GoalGroups", `${id}`, newData);
     closeModal();
   }
 
+  console.log(clickedGoalItem);
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
@@ -32,7 +33,7 @@ function EditGoalModal() {
           type="text"
           id="goal"
           ref={goalRef}
-          defaultValue={clickedGoalGroup.description}
+          defaultValue={clickedGoalItem.description}
         />
         <div className="points-container">
           <div className="points-text">Points</div>
@@ -41,7 +42,7 @@ function EditGoalModal() {
             className="points-input input2"
             id="points"
             ref={pointsRef}
-            defaultValue={clickedGoalGroup.points}
+            defaultValue={clickedGoalItem.points}
           />
         </div>
         <button className="confirm-btn btn4">

@@ -27,93 +27,58 @@ firebase.initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 
-// Collections
-export const selfAwarenessCol = collection(db, "SelfAwarenessText"); //Collection of sections in the Self Awareness Page
-export const toDoTaskCol = collection(db, "ToDoTaskList"); //Collection of sections in the Self Awareness Page
-export const goalCol = collection(db, "GoalGroups"); //Collection of sections in the Self Awareness Page
-
 //CRUD FUNCTIONS
 
+//GET COLLECTION
+export const getCollection = async (path, setState) => {
+  const col = collection(db, path);
+  try {
+    onSnapshot(col, (snapshot) => {
+      let data = [];
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data(), id: doc.id });
+      });
+      setState(data);
+      console.log(data);
+    });
+    getCollection;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // GET DOCUMENT
-export const getDocument = async (col, id, action) => {
-  const docRef = doc(db, `${col}`, `${id}`);
+export const getDocument = async (path, id, setState) => {
+  const docRef = doc(db, path, `${id}`);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     let data = docSnap.data();
     data.id = `${id}`;
-    action(data);
+    setState(data);
   } else {
     console.log("no data");
   }
 };
 
-//GET NESTED DOCUMENT
-export const getNestedDocument = async (
-  mainColName,
-  idFirstDoc,
-  subCollectionName,
-  action
-) => {
-  try {
-    const col = collection(db, mainColName, idFirstDoc, subCollectionName);
-    onSnapshot(col, (snapshot) => {
-      let data = [];
-      snapshot.docs.forEach((doc) => {
-        data.push({ ...doc.data(), id: doc.id });
-      });
-      action(data);
-    });
-    fetchAndSetData;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//GET COLLECTION
-export const fetchAndSetData = async (col, action) => {
-  try {
-    onSnapshot(col, (snapshot) => {
-      let data = [];
-      snapshot.docs.forEach((doc) => {
-        data.push({ ...doc.data(), id: doc.id });
-      });
-      action(data);
-    });
-    fetchAndSetData;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//UPDATE A DOCUMENT
-export const updateData = async (col, id, newData) => {
-  const docRef = doc(db, `${col}`, `${id}`);
-  await updateDoc(docRef, newData);
-};
-
-//ADD A DOCUMENT WITH ID
-export const addData = async (col, newData) => {
+//ADD A DOCUMENT WITH AUTO ID
+export const addDocumentAutoId = async (path, newData) => {
+  const col = collection(db, path);
   await addDoc(col, newData);
 };
 
-//DELETE DOCUMENT
-export const deleteData = async (col, id) => {
-  await deleteDoc(doc(db, col, `${id}`));
-};
-
 //ADD DOCUMENT WITHOUT AUTO ID
-export const addDocumentNoAutoId = async (col, newDocName, fields) => {
+export const addDocumentAutoIdNoAutoId = async (path, newDocName, fields) => {
+  const col = collection(db, path);
   await setDoc(doc(db, col, `${newDocName}`), fields);
 };
 
-//ADD A NEW SUB-COLLECTION (1 LEVEL BELOW)
-export const addSubCollection = async (
-  mainColName,
-  idFirstDoc,
-  subCollectionName,
-  subColData
-) => {
-  const docRef = doc(db, mainColName, idFirstDoc);
-  const colRef = collection(docRef, subCollectionName);
-  addDoc(colRef, subColData);
+//DELETE DOCUMENT
+export const deleteData = async (path, id) => {
+  await deleteDoc(doc(db, path, id));
+};
+
+//UPDATE A DOCUMENT
+export const updateData = async (path, id, newData) => {
+  const docRef = doc(db, path, `${id}`);
+  await updateDoc(docRef, newData);
 };

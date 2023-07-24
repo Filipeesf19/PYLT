@@ -1,8 +1,8 @@
 import { useModalContext } from "../Context/ModalContext";
 import { styled } from "styled-components";
 import { useRef } from "react";
-import { addSubCollection } from "../utils/firebase";
 import { useGoalsContext } from "../Context/GoalsContext";
+import { addDocumentAutoId } from "../utils/firebase";
 
 function AddGoalModal() {
   const { closeModal } = useModalContext(); //Close the Modal
@@ -20,12 +20,7 @@ function AddGoalModal() {
       points: `${points}`,
       isDone: false,
     };
-    addSubCollection(
-      "GoalGroups",
-      `${clickedGoalGroup.id}`,
-      "GoalList",
-      newData
-    );
+    addDocumentAutoId(`GoalGroups/${clickedGoalGroup.id}/GoalList`, newData);
     closeModal();
   }
 
