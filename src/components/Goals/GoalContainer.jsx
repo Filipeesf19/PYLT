@@ -1,20 +1,28 @@
 import { styled } from "styled-components";
+import { useEffect } from "react";
 import GoalItem from "./GoalItem";
 import { useGoalsContext } from "../../Context/GoalsContext";
 import { useModalContext } from "../../Context/ModalContext";
 import { FaPlusCircle } from "react-icons/fa";
-import { getDocument } from "../../utils/firebase";
+import { getDocument, fetchAndSetData } from "../../utils/firebase";
+import { db } from "../../utils/firebase";
+import { collection } from "firebase/firestore";
 
 function GoalContainer({ title }) {
-  const { GoalGroups, setClickedGoalGroups, clickedGoalGroups } =
-    useGoalsContext();
+  const goalListCol = collection(db, "GoalGroups", `${title}`, "GoalList");
+
+  const { setClickedGoalGroup, goals, setGoals } = useGoalsContext();
   const { openAddGoalModal } = useModalContext();
 
   function addButtonClick() {
-    getDocument("GoalGroups", `${title}`, setClickedGoalGroups);
+    getDocument("GoalGroups", `${title}`, setClickedGoalGroup);
     openAddGoalModal();
   }
 
+  useEffect(() => {
+    fetchAndSetData(goalListCol, setGoals);
+  }, []);
+  console.log(goals);
   return (
     <Wrapper className="goal-container">
       <div className="header">
@@ -25,11 +33,12 @@ function GoalContainer({ title }) {
         </button>
       </div>
       <div className="body">
-        {GoalGroups.map((goal, index) => {
+        {goals?.map((goal, index) => {
           const { description, points, isDone, id } = goal;
+          console.log(description);
           return (
             <GoalItem
-              key={index}
+              key={crypto.randomUUID()}
               id={id}
               description={description}
               points={points}

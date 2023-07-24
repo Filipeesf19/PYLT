@@ -5,14 +5,13 @@ import {
   deleteData,
   updateData,
   getDocument,
-  toDoTaskCol,
   fetchAndSetData,
 } from "../../utils/firebase";
 import { useTaskContext } from "../../Context/TasksContext";
 
 function ToDoTask({ description, points, isDone, id }) {
-  const { openTaskEditModal } = useModalContext();
-  const { setClickedToDoItem, setToDoTasksData } = useTaskContext();
+  const { openTaskEditModal } = useModalContext(); //Open the edit Modal when clicking the edit button on the single item
+  const { setClickedToDoItem } = useTaskContext(); //get last item clicked so we can update its properties
 
   //Open the modal, get the clicked item and set it in the state
   function editClick() {
@@ -20,11 +19,10 @@ function ToDoTask({ description, points, isDone, id }) {
     getDocument("ToDoTaskList", `${id}`, setClickedToDoItem);
   }
 
-  //Get the clicked item, set it in the state and update the document property in the server
+  //Get the clicked item and set it in the state
   function toggleTask() {
     fetchAndSetData("ToDoTaskList", `${id}`, setClickedToDoItem);
     updateData("ToDoTaskList", id, { isDone: !isDone });
-    fetchAndSetData(toDoTaskCol, setToDoTasksData);
   }
 
   return (

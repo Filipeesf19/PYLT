@@ -65,11 +65,11 @@ export const ModalProvider = ({ children }) => {
   };
 
   //Goal Add Item Modal
-  const [isAddGoalAreaClicked, setIsAddGoalAreaClicked] = useState(false);
+  const [isAddGoalGroupClicked, setisAddGoalGroupClicked] = useState(false);
 
-  const openAddGoalAreaModal = () => {
+  const openAddGoalGroupModal = () => {
     setIsModalOpen(true);
-    setIsAddGoalAreaClicked(true);
+    setisAddGoalGroupClicked(true);
   };
 
   //Close Modal
@@ -100,8 +100,8 @@ export const ModalProvider = ({ children }) => {
         openAddGoalModal,
         isEditGoalClicked,
         openGoalEditModal,
-        isAddGoalAreaClicked,
-        openAddGoalAreaModal,
+        isAddGoalGroupClicked,
+        openAddGoalGroupModal,
         closeModal,
       }}
     >

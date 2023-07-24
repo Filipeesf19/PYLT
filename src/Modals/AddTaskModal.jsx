@@ -6,25 +6,24 @@ import { addData } from "../utils/firebase";
 import { useTaskContext } from "../Context/TasksContext";
 
 function AddTaskModal() {
-  const { closeModal } = useModalContext();
-  const { toDoListSelectedWeek } = useTaskContext();
+  const { closeModal } = useModalContext(); //Modal to close when form is submitted
+  const { toDoListSelectedWeek } = useTaskContext(); //Get last week clicked, so we can add it to the property of the task
 
-  const taskRef = useRef(null);
-  const pointsRef = useRef(null);
+  const taskRef = useRef(null); //Task description reference initialization (input text)
+  const pointsRef = useRef(null); //Task points reference initialization (input text)
 
   function handleSubmit(e) {
     e.preventDefault();
-    const task = taskRef.current.value;
-    const points = pointsRef.current.value;
-    const week = toDoListSelectedWeek;
+    const task = taskRef.current.value; //Task description reference initialization (input text)
+    const points = pointsRef.current.value; //Task points reference initialization (input text)
     const newData = {
       description: `${task}`,
       points: `${points}`,
-      week: `${week}`,
+      week: `${toDoListSelectedWeek}`,
       isDone: false,
-    };
-    addData(toDoTaskCol, newData);
-    closeModal();
+    }; //define the new data
+    addData(toDoTaskCol, newData); //Add the new document to the "toDoTaskList" collection
+    closeModal(); //close modal
   }
 
   return (

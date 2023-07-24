@@ -54,15 +54,18 @@ export const getNestedDocument = async (
   subCollectionName,
   action
 ) => {
-  const docRef = doc(db, mainColName, idFirstDoc);
-  const colRef = collection(docRef, subCollectionName);
-  const docSnap = await getDoc(colRef);
-  if (docSnap.exists()) {
-    let data = docSnap.data();
-    data.id = `${id}`;
-    action(data);
-  } else {
-    console.log("no data");
+  try {
+    const col = collection(db, mainColName, idFirstDoc, subCollectionName);
+    onSnapshot(col, (snapshot) => {
+      let data = [];
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data(), id: doc.id });
+      });
+      action(data);
+    });
+    fetchAndSetData;
+  } catch (error) {
+    console.log(error);
   }
 };
 

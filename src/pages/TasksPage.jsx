@@ -14,11 +14,12 @@ import { useModalContext } from "../Context/ModalContext";
 function TasksPage() {
   const { setToDoTasksData } = useTaskContext();
 
-  //Firebase fetch data and set the state value array equal to the array in the server
+  //Fetch data from Firebase and set the state value "ToDoTasksData" equal to the array in the server every time the page is rendered
   useEffect(() => {
     fetchAndSetData(toDoTaskCol, setToDoTasksData);
   }, []);
 
+  //Get all the modals available in this page
   const {
     isToDoTaskAddClicked,
     isYearsClicked,

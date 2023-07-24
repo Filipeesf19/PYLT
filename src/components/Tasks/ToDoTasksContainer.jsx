@@ -5,9 +5,8 @@ import { useModalContext } from "../../Context/ModalContext";
 import { useTaskContext } from "../../Context/TasksContext";
 
 function ToDoTasksContainer() {
-  const { openToDoAddModal, openWeekSelectionModal } = useModalContext();
-  const { toDoTasksData, setToDoTasksData, toDoListSelectedWeek } =
-    useTaskContext();
+  const { openToDoAddModal, openWeekSelectionModal } = useModalContext(); //We have 2 buttons: 1 to open the Task Add Modal, 1 to open the week selection modal
+  const { toDoTasksData, toDoListSelectedWeek } = useTaskContext(); //We want to iterate over the toDoTasksData array
 
   return (
     <Wrapper className="to-do-container">
@@ -37,8 +36,6 @@ function ToDoTasksContainer() {
                 description={description}
                 points={points}
                 isDone={isDone}
-                toDoTasksData={toDoTasksData}
-                setToDoTasksData={setToDoTasksData}
               />
             );
           }

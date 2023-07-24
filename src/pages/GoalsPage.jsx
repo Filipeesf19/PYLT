@@ -8,18 +8,19 @@ import Modal from "../Modals/Modal";
 import AddGoalModal from "../Modals/AddGoalModal";
 import { fetchAndSetData } from "../utils/firebase";
 import EditGoalModal from "../Modals/EditGoalModal";
-import AddGoalGroupsModal from "../Modals/AddGoalGroupsModal";
+import AddGoalGroupModal from "../Modals/AddGoalGroupModal";
 
 function GoalsPage() {
   const {
     openAddGoalModal,
-    openAddGoalAreaModal,
+    openAddGoalGroupModal,
     isYearsClicked,
     isAddGoalClicked,
     isEditGoalClicked,
-    isAddGoalAreaClicked,
+    isAddGoalGroupClicked,
   } = useModalContext();
-  const { GoalGroups, setGoalGroups } = useGoalsContext();
+
+  const { goalGroups, setGoalGroups } = useGoalsContext();
 
   //Firebase fetch data and set the state value array equal to the array in the server
   useEffect(() => {
@@ -29,7 +30,7 @@ function GoalsPage() {
   return (
     <Wrapper>
       <div className="btns-container">
-        <button className="btn4" onClick={openAddGoalAreaModal}>
+        <button className="btn4" onClick={openAddGoalGroupModal}>
           Add
         </button>
         <button className="btn4" onClick={openAddGoalModal}>
@@ -37,8 +38,8 @@ function GoalsPage() {
         </button>
       </div>
       <div className="body">
-        {GoalGroups.map((goalArea, index) => {
-          return <GoalContainer key={index} title={goalArea.id} />;
+        {goalGroups?.map((goalGroup, index) => {
+          return <GoalContainer key={index} title={goalGroup.id} />;
         })}
       </div>
       <Modal>
@@ -49,8 +50,8 @@ function GoalsPage() {
             return <YearListModal />;
           } else if (isEditGoalClicked) {
             return <EditGoalModal />;
-          } else if (isAddGoalAreaClicked) {
-            return <AddGoalGroupsModal />;
+          } else if (isAddGoalGroupClicked) {
+            return <AddGoalGroupModal />;
           }
         })()}
       </Modal>

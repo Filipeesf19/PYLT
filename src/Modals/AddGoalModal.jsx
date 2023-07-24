@@ -5,14 +5,14 @@ import { addSubCollection } from "../utils/firebase";
 import { useGoalsContext } from "../Context/GoalsContext";
 
 function AddGoalModal() {
-  const { closeModal } = useModalContext();
-  const { clickedGoalGroups } = useGoalsContext();
-  const goalRef = useRef(null);
-  const pointsRef = useRef(null);
+  const { closeModal } = useModalContext(); //Close the Modal
+  const { clickedGoalGroup } = useGoalsContext(); //Last clicked goal group
+  const goalRef = useRef(null); //goal description ref (input field)
+  const pointsRef = useRef(null); //points ref (input field)
 
+  //Add the data in the input fields as properties of the new goal object in the server
   function handleSubmit(e) {
     e.preventDefault();
-    const clickedGroup = String(clickedGoalGroups.id);
     const goal = goalRef.current.value;
     const points = pointsRef.current.value;
     const newData = {
@@ -20,7 +20,12 @@ function AddGoalModal() {
       points: `${points}`,
       isDone: false,
     };
-    addSubCollection("GoalGroups", clickedGroup, "GoalList", newData);
+    addSubCollection(
+      "GoalGroups",
+      `${clickedGoalGroup.id}`,
+      "GoalList",
+      newData
+    );
     closeModal();
   }
 

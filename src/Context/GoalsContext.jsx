@@ -3,24 +3,29 @@ import { createContext, useContext, useState } from "react";
 const GoalsContext = createContext();
 
 export const GoalsProvider = ({ children }) => {
+  //List of Goals Groups
+  const [goalGroups, setGoalGroups] = useState([]);
+
   //List of Goals
-  const [GoalGroups, setGoalGroups] = useState([]);
+  const [goals, setGoals] = useState([]);
 
   //Last goal item that was clicked
-  const [clickedGoalGroup, setClickedGoalGroup] = useState([]);
+  const [clickedGoalItem, setClickedGoalItem] = useState([]);
 
   //Last Clicked Goal Group
-  const [clickedGoalGroups, setClickedGoalGroups] = useState({});
+  const [clickedGoalGroup, setClickedGoalGroup] = useState({});
 
   return (
     <GoalsContext.Provider
       value={{
-        GoalGroups,
+        goalGroups,
         setGoalGroups,
+        goals,
+        setGoals,
+        clickedGoalItem,
+        setClickedGoalItem,
         clickedGoalGroup,
         setClickedGoalGroup,
-        clickedGoalGroups,
-        setClickedGoalGroups,
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { useRef } from "react";
 import { addDocumentNoAutoId } from "../utils/firebase";
 
-function AddGoalAreaModal() {
+function AddGoalGroupModal() {
   const { closeModal } = useModalContext();
 
   const titleRef = useRef(null);
@@ -77,4 +77,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default AddGoalAreaModal;
+export default AddGoalGroupModal;
